@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="all_lib_info_list" />
+    <string-array name="occupancy_list" >
+        <item>Main Library</item>
+        <item>Kun-Yen Medical Library</item>
+        <item>KnowLEDGE</item>
+        <item>Creativity and Discussion Room (D-24)</item>
+        <item>Future Venue\nCo-Education Space</item>
+    </string-array>
+    <string-array name="manage_dept_list" >
+        <item></item>
+        <item>NCKU Library</item>
+        <item>NCKU Library</item>
+        <item>Student Development and Activities Division</item>
+        <item>Center for Teaching and Learning Development</item>
+    </string-array>
+    <string-array name="contact_list" >
+        <item></item>
+        <item>#75120</item>
+        <item>#34906</item>
+        <item>#50360</item>
+        <item>#80926</item>
+    </string-array>
+</resources>

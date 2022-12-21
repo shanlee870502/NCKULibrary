@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="left|top"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="edu.ncku.application.MainActivity">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tool_001"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                android:minHeight="?attr/actionBarSize"/>
+
+            <FrameLayout
+                android:id="@+id/content_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_below="@+id/toolbar"></FrameLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+        <!--20200116 更改了原本只有ListView的布局，
+            在外面包了一層RelativeLayout，
+            並且在底下加上copyright以及version的Textview，
+            此變動會影響到DrawerListSelector以及MainActivity兩個java檔-->
+        <!--<ListView
+            android:id="@+id/left_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/white"
+            android:layout_gravity="left|start"
+            android:dividerHeight="1dp">
+
+
+        </ListView>-->
+        <RelativeLayout
+            android:id="@+id/drawer_frame"
+            android:layout_width="220dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|start">
+
+            <ListView
+                android:id="@+id/left_drawer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/textView5"
+                android:background="@android:color/white"
+                android:choiceMode="singleChoice"
+                android:divider="@android:color/white"
+                android:dividerHeight="1dp">
+
+
+            </ListView>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/textView6"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:text="@string/copyright"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:text="@string/version"
+                android:textColor="@color/black" />
+        </RelativeLayout>
+
+
+
+
+
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</LinearLayout>

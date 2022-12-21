@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="edu.ncku.application">
+
+    <!-- [START App 權限] -->
+    <!-- 相機權限 : ISBN掃描使用 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 網路權限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- 取得行動裝置資訊(錯誤回報使用) -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions"/>
+    <!-- 通話權限 : 通訊錄使用 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 取得網路狀態權限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 外部空間寫入權限 -->
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- SD卡存取權限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEM" />
+    <!-- 獲取開機事件權限 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- [END App 權限] -->
+
+
+    <!-- [START GCM 權限] -->
+    <!-- 取得帳戶資料權限 -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <!-- [END GCM 權限] -->
+
+
+    <!-- [START Google Map 權限] -->
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
+    <!-- The users-feature will avoid the device can't use Google Maps Android API v2 to install this app in google play store. -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="false" />
+
+    <!-- 20210915 改為false -->
+    <!-- [END Google Map 權限] -->
+
+    <!-- 20210915修正平板裝置不相容問題(沒有打電話功能)   -->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false"/>
+
+    <queries>
+        <package android:name="com.facebook.katana" />
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:name="androidx.multidex.MultiDexApplication"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:node="merge">
+
+        <!-- 20210127 修正targetSDK調升後產生的google map 出現問題 開始 -->
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <!-- 20210127 修正targetSDK調升後產生的google map 出現問題 結束 -->
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
+            <!--android:windowSoftInputMode="stateAlwaysHidden"-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- [START news_receive_service] -->
+        <service
+            android:name=".service.DataReceiveService"
+            android:exported="false" />
+        <!-- [END news_receive_service] -->
+
+
+        <!-- [START network_state_service] -->
+        <service
+            android:name=".service.NetworkListenerService"
+            android:enabled="true"
+            android:exported="false" />
+        <!-- [END network_state_service] -->
+
+        <!-- [START fcm_listener_service] -->
+        <service android:name=".service.OwnFcmListenerService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- [END fcm_listener_service] -->
+
+
+        <!-- [START instanceId_listener] -->
+        <service android:name=".service.OwnInstanceIDListenerService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- [END instanceId_listener] -->
+
+
+        <!-- [START registration_service] -->
+        <!-- <service -->
+        <!-- android:name=".service.RegistrationIntentService" -->
+        <!-- android:exported="false" /> -->
+        <!-- [END registration_service] -->
+
+
+        <!-- [START network_check_receiver] -->
+        <receiver
+            android:name=".io.network.NetworkCheckReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <!-- [END network_check_receiver] -->
+
+
+        <!-- [START reboot_receiver] -->
+        <receiver
+            android:name=".service.RebootReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <!-- [END reboot_receiver] -->
+
+
+        <!--
+                The API key for Google Maps-based APIs is defined as a string resource.
+                (See the file "res/values/google_maps_api.xml").
+                Note that the API key is linked to the encryption key used to sign the APK.
+                You need a different API key for each encryption key, including the release key that is used to
+                sign the APK for publishing.
+                You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+
+        <service
+            android:name=".service.DeleteTokenService"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification_red" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/notification_red" />
+
+
+    </application>
+
+</manifest>

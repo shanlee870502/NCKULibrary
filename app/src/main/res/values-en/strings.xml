@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NCKU Library</string>
+    <string name="action_settings">setting</string>
+
+    <!-- 20200617 更新設定值 -->
+    <string-array name="unit_array">
+        <item>System Management</item>
+        <item>Collection Management</item>
+        <item>Administration</item>
+        <item>Acquisition &amp; Cataloging</item>
+        <item>Information Services</item>
+        <item>Medical Library</item>
+        <item>Media Services</item>
+        <item>Periodicals</item>
+        <item>Circulation &amp; Public Services</item>
+        <item>Administration Division</item>
+        <item>Collection Management and Circulation Services Division</item>
+        <item>Information Technology Services Division</item>
+        <item>Knowledge Services Division</item>
+        <item>Library Extension Services Division</item>
+    </string-array>
+    <string-array name="lib_info_list">
+        <item>Open Hours</item>
+        <item>Floor Plan</item>
+        <item>Contact</item>
+        <item>Location</item>
+    </string-array>
+    <string-array name="lib_open_time_unit_list">
+        <item>Main Library</item>
+        <item>Study Hall</item>
+        <item>Learning Commons(Ching-Yen campus)</item>
+        <item>Medical Library</item>
+        <item>Department Libraries</item>
+    </string-array>
+
+    <!-- 側滑選單 -->
+    <string name="home_page">Home</string>
+    <string name="messenger">View Push Notification</string>
+    <string name="login">Login</string>
+    <string name="copyright">©2020 NCKU Copyright</string>
+    <string name="version">App Version:2.1</string>
+<!--    0.1320220519-->
+    <!-- 主頁功能名稱 -->
+    <string name="homepage_ic_info">Library Guide</string>
+    <string name="homepage_ic_news">News</string>
+    <string name="homepage_ic_search">Catalogs</string>
+    <string name="homepage_ic_barrow">My Account</string>
+    <string name="homepage_ic_activity">Upcoming Events</string>
+    <string name="homepage_ic_occupancy">Current Occupancy</string>
+    <!-- 設定或Toast訊息 -->
+    <string name="login_success">login successful</string>
+    <string name="login_attempt_3_times">Login has been temporarily disabled due to too many unsuccessful login attempts. Please try again in 15 minutes.</string>
+    <string name="subscription_title">Subscribe Push Notification</string>
+    <string name="dialog_subscription">Sure to change the subscription settings?</string>
+    <string name="dialog_close_confirm">Exit?</string>
+    <string name="messenger_network_disconnected">Please keep network working, in order to get the latest information.</string>
+    <string name="network_disconnected">Network connection required, please try again</string>
+    <string name="invalid_account_or_password">wrong account  or password</string>
+    <string name="login_tip">This function currently open to faculty and students of NCKU. Use the account and password as in NCKU Portal.</string>
+    <string name="confirm">yes</string>
+    <string name="cancel">cancel</string>
+    <string name="setting">Settings</string>
+    <string name="setting_hint">To subscribe notifications, go to</string>
+    <string name="is_loading">refresh</string>
+    <string name="reloading">scroll down or tap to refresh</string>
+    <string name="news_empty">No latest news</string>
+    <string name="no_maps">unable to us Google Maps APP</string>
+    <string name="map_network">Please connect to network in order to use Google Maps APP conveniently.</string>
+    <string name="search_bar_hint">Please enter keywords</string>
+    <string name="not_match_isbn">Invalid ISBN, please scan the barcode on the back cover</string>
+    <string name="msg_empty">No messages</string>
+    <string name="subscription_tip">Push notifications will be automatically canceled after finishing departure from school procedure. </string>
+    <string name="please_wait">Please wait,</string>
+    <string name="handle_subscription">Subscription in process</string>
+    <string name="sub_handled">Subscription complete</string>
+    <string name="sub_fail">Subscription failed, please try again</string>
+    <string name="delete">delete</string>
+    <string name="multiSelect">multiSelect</string>
+    <string name="account">Account</string>
+    <string name="link">Related Link</string>
+    <string name="additional">Additional File</string>
+    <string name="contact_phone">LIBRARY</string>
+    <string name="default_name">User</string>
+    <string name="login_title">Welcome</string>
+    <string name="termTime">學期中</string>
+    <string name="vacations">寒暑假</string>
+    <string name="termTime_eng">Term times</string>
+    <string name="vacations_eng">Vacations</string>
+    <string name="visitors_main">Main Lib visits :</string>
+    <string name="visitors_k">KnowLEDGE 1F visits :</string>
+    <string name="visitors_k2">KnowLEDGE 2F visits :</string>
+    <string name="wait_update">--</string>
+    <string name="update_fail">Update fail</string>
+    <string name="copy_success">Copy success</string>
+    <string name="homepage_main">\u0020\u0020Main Lib.\u0020\u0020</string>
+    <string name="homepage_knowledge">\u0020\u0020KnowLEDGE\u0020\u0020</string>
+    <string name="login_privacy">I agree to the NCKU Library Privacy Policy</string>
+    <!--    Occupancy Page  -->
+    <string name="current_occupancy">Occupancy\u0020</string>
+    <string name="total_occupancy">\u0020of\u0020</string>
+    <string name="manage_dept">This area is in charge of\u0020</string>
+    <string name="contact_extension">Contact Extension:\u0020</string>
+    <string name="occupancy_warn_message">The number of readers is for reference only,\nthe accurate number is based on the scene.</string>
+    <string name="manage_rule">Management Regulations</string>
+    <string name="show_map">Show Map</string>
+    <string name="more_info">More Information</string>
+    <string name="open24hr">24-hour Open Space</string>
+    <!-- 系統用無需翻譯 -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps" translatable="false">Map</string>
+    <string name="subscription">MESSAGER_SUBSCRIPTION</string>
+    <string name="title">標題</string>
+    <string name="unit">單位</string>
+    <string name="time">時間</string>
+    <string name="drawer_open">打開</string>
+    <string name="drawer_close">關閉</string>
+
+    <string name="pwHint">Password</string>
+    <string name="urHint">Username</string>
+    <string name="forgot_pwd">Forgot password?</string>
+    <string name="deleteHint">Are you sure?</string>
+    <string name="sub_hint">Need push subscription?(If no, you can change the options  from Settings)</string>
+    <string name="scan_isbn">Please scan an ISBN barcode</string>
+    <string name="ncku_library_web_page_img">NCKU Library Web Page</string>
+
+    <!-- 按首頁畫面，連結到圖書館網頁的一些翻譯內容 -->
+    <string name="go_to_lib_web_page">Do you want to open the web page of the library?</string>
+    <string name="back_to_app">Back to App</string>
+    <string name="go_to_spacemgr_web_page">Do you want to open the web page of library space management system?</string>
+    <string name="go_to_fbfanpage">Do you want to open library FB fan page?</string>
+    <string name="go_to_curoccupancy_web_page">Do you want to open the web page of library current occupancy system?</string>
+    <string name="go_to_rule_web_page">Do you want to open the web page of management rule?</string>
+    <string name="go_to_info_web_page">Do you want to open the web page(facebook) of this building?</string>
+    <!--檢查登入狀態的訊息-->
+    <string name="login_state_message">Checking login state</string>
+    <string name="login_detect_error">Unable to check the login state without network disconnection.</string>
+    <string name="approval">Approve successfully.</string>
+    <string name="disapproval"></string>
+    <string name="password_contains_invalid_character">There are some invalid characters in your password. Please contact the ncku library for further information</string>
+    <!-->
+    <string name="privacy_policy"><![CDATA[<p class="P3">Privacy <span class="T3">Policy</span></p><p class="P4"><span class="T5">1. The content of </span><span class="T2">the Privacy Protection Policy includes how the personal identification data collected during your utilization of our app will be processed. The Privacy Protection Policy does not apply to other relevant linked websites from our app; it does not apply to the management personnel that are not directly commissioned by or involved in the </span><span class="T5">Website.</span></p><p class="P7"> </p><p class="P4"><span class="T5">2. </span><span class="T6">NCKU Library app collects and processes your personal data carefully, only for the specific purposes of this app and the scope of NCKU Library services.</span></p><p class="P7"> </p><p class="P7"><span class="T8">3. NCKU Library </span><span class="T9">app requires the your personal information including your student ID or staff ID and password of NCKU for access personalized service. Only the student ID or staff ID will be stored in this </span><span class="T8">app.</span></p><p class="P4"> </p><p class="P4"><span class="T5">4. In addition, </span><span class="T2">NCKU Library app may collect certain information automatically including the type of mobile device you use, application token, OS version, visitor activities and login time for analytical purposes to help us further improve the application.                </span></p><p class="P7"> </p><p class="P4"><span class="T5">5. National Cheng </span><span class="T2">Kung University Library hereby ensures personal information provided through NCKU Library app conforms to the "Personal Information Protection Act" of Taiwan(R.O.C.). For detailed information about National Cheng Kung University Library\'s privacy policy and security, please visit: </span></p><p class="P6"><span>https://app.lib.ncku.edu.tw/privacy.xhtml</span></p><p class="P6"> </p><p class="P7"> </p><p class="P3">NCKU Library app may request permission of device <span class="T10">according</span> to your <span class="T3">needs.</span></p><p class="P3">1. NCKU Library app requests connection to Internet for online services and receiving notifications. </p><p class="P7"> </p><p class="P3">2. NCKU Library app requests to use camera to extract information from the ISBN <span class="T10">bar-code</span> of <span class="T3">books.</span></p><p class="P9"><span class="T1">3. NCKU Library app </span><span class="T4">may ask permission to use notifications.</span></p>]]></string>
+    <-->
+    <string name="privacy_policy"><![CDATA[<body>
+	<p><h5>Policy of Collection, Processing, and Utilization of Your Personal Data (hereinafter referred to as “Policy”)</h5></p>
+	<p>
+		<h5>The Scope of the Privacy Protection Policy</h5>
+		<br>
+		<span>The content of the Policy includes how your personal data will be collected, processed, and used in NCKU Library app and in-app services. The Policy does not apply to other relevant linked websites from NCKU Library app; it does not apply to the management personnel that are not directly commissioned by or involved in the above-mentioned websites.</span>
+	</p>
+	<p>
+	<p>
+		<h5>The Collection and Utilization of Data</h5>
+
+	</p>
+		<p>
+		<span>1. </span>
+		<span>NCKU Library app collects and processes your personal data carefully and abides by the necessity of data utilization in an appropriate way only for the specific purposes of promoting and providing NCKU Library mobile services to clients.</span></p>
+		<p>
+		<span>2. </span>
+		<span>NCKU Library app requires your personal information including your student ID (or staff ID) and password of NCKU portal for accessing personalized service. Only your student ID (or staff ID) and name will be stored in this app.</span></p>
+		<p>
+		<span>3. </span>
+		<span>In addition, NCKU Library app may collect certain information automatically including the type of mobile device you use, application token, OS version, visitor activities and login time for analytical purposes to help us further improve the application.</span></p>
+		<p>
+		<span>4. </span>
+		<span>National Cheng Kung University Library hereby ensures personal information provided through NCKU Library app conforms to the “<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=I0050021">Personal Information Protection Act</a>” of Taiwan (R.O.C.).</span></p>
+		<p>
+		<span>For detailed information about National Cheng Kung University Library\'s privacy policy and security, please visit:<br><a href="https://app.lib.ncku.edu.tw/privacy.xhtml">https://app.lib.ncku.edu.tw/privacy.xhtml</a> </span>
+		</p>
+		<p><h5>NCKU Library app may request permission of device according to your needs.</h5></p>
+		<p>
+			<span>1. </span>
+			<span>NCKU Library app requests connection to Internet for online services and receiving notifications.</span></p>
+			<p>
+			<span>2. </span>
+			<span>NCKU Library app requests to use camera to extract information from the ISBN bar-code of books.</span></p>
+			<p>
+			<span>3. </span>
+			<span>NCKU Library app may ask permission to use notifications.</span></p>
+]]></string>
+    <!--安全性提示 20201123 modified-->
+    <string name="login_failed">Connection failed</string>
+    <string name="ssl_hint">Please disable the HTTP Proxy and try again later.</string>
+</resources>

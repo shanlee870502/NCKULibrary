@@ -1,0 +1,96 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+//        debug {
+//            storeFile file('D:\\AndroidStudioProjects\\Jeff__new_version\\AppKey\\新增資料夾\\nckulib.jks')
+//            keyAlias 'key0'
+//            storePassword 'nckulib@em65770'
+//            keyPassword 'nckulib@em65770'
+//        }
+    }
+    compileSdkVersion 30
+//    buildToolsVersion '30.0.3'
+    useLibrary 'org.apache.http.legacy'
+    defaultConfig {
+        applicationId "edu.ncku.application"
+        minSdkVersion 19
+        targetSdkVersion 30
+        //noinspection AccidentalOctal
+        versionCode 21
+        versionName '2.1'
+        multiDexEnabled true
+        signingConfig signingConfigs.debug
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dexOptions {
+        javaMaxHeapSize "2g"
+    }
+    android {
+
+        packagingOptions {
+            exclude 'META-INF/DEPENDENCIES'
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'com.facebook.android:facebook-applinks:latest.release'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    //noinspection GradleCompatible
+//    implementation 'com.android.support:appcompat-v7:23.2.1'
+//    implementation 'com.android.support:design:23.2.1'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    implementation 'com.journeyapps:zxing-android-embedded:3.3.0@aar'
+    implementation 'com.google.zxing:core:3.2.1'
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    //implementation 'org.apache.httpcomponents:httpclient:4.5.2'
+
+//    implementation 'com.google.android.gms:play-services:12.0.1'
+//    implementation 'com.google.android.gms:play-services-ads:20.4.0'
+    implementation 'com.google.android.gms:play-services-auth:20.0.1'
+
+    //google maps location
+    implementation 'com.google.android.gms:play-services-awareness:19.0.1'
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+
+//   no longer needed: https://firebase.google.com/support/release-notes/android#20180523
+    implementation 'com.google.firebase:firebase-core:20.0.2'
+    implementation 'com.google.firebase:firebase-analytics:20.0.2'
+
+    implementation 'com.google.firebase:firebase-inappmessaging:20.1.1'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:20.1.1'
+
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+
+    //20200406 Use of ticker
+    implementation 'com.robinhood.ticker:ticker:2.0.2'
+
+    //20200429 Use of bottom sheet
+    //implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+
+    //20210806 card view
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'com.timqi.sectorprogressview:library:2.0.1'
+    implementation "com.squareup.okhttp3:okhttp:3.12.13"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:3.12.13"
+}
+
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.android.application'

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="ACCOUNT_RELATION"
+        android:summary="帳號相關"
+        android:title="@string/account" >
+        <SwitchPreference
+            android:key="@string/subscription"
+            android:title="@string/subscription_title"
+            android:summary="@string/subscription_tip" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

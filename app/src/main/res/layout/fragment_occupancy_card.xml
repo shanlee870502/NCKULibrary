@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardElevation="4dp"
+        card_view:cardMaxElevation="6dp"
+        android:background="@android:color/transparent"
+        android:layout_margin="5dp"
+        >
+        <RelativeLayout
+            android:id="@+id/rl"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_margin="0dp"
+            android:padding="0dp"
+            android:background="@drawable/gradient_backgroud"
+
+            >
+            <RelativeLayout
+                android:id="@+id/frame"
+                android:layout_width="115dp"
+                android:layout_height="115dp"
+                android:layout_margin="5dp"
+                android:layout_centerVertical="true"
+                >
+                <com.timqi.sectorprogressview.ColorfulRingProgressView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/occupancy_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:bgColor="#e1e1e1"
+                    app:fgColorEnd="#ffa400"
+                    app:fgColorStart="#ff4800"
+                    app:percent="90"
+                    app:startAngle="0"
+                    app:strokeWidth="10dp" />
+
+                <TextView
+                    android:id="@+id/occupancy_percent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="20"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="30sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="%"
+                    android:layout_marginTop="60dp"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="8sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/dorm_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/frame"
+                android:layout_toRightOf="@+id/frame"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="5dp"
+                android:layout_marginTop="10dp"
+                android:text="總圖書館"
+                android:textColor="#000"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/dorm_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="#000"
+                android:padding="5dp"
+                android:layout_below="@id/dorm_title"
+                android:layout_toRightOf="@+id/frame"
+                android:layout_toEndOf="@+id/frame"
+                />
+            <TextView
+                android:id="@+id/manage_dept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="#000"
+                android:padding="5dp"
+                android:textSize="12dp"
+                android:layout_below="@id/dorm_subtitle"
+                android:layout_toRightOf="@+id/frame"
+                android:layout_toEndOf="@+id/frame"
+                />
+            <TextView
+                android:id="@+id/contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="#000"
+                android:padding="5dp"
+                android:textSize="12dp"
+                android:layout_below="@id/manage_dept"
+                android:layout_toRightOf="@+id/frame"
+                android:layout_toEndOf="@+id/frame"
+                />
+
+            <ImageButton
+                android:id="@+id/three_dot_button"
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:layout_alignParentEnd="true"
+                android:background="@color/zxing_transparent"
+                android:src="@drawable/ic_more_horiz" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

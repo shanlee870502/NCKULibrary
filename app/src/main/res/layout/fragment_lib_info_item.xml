@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="horizontal" >
+    
+    <LinearLayout
+        android:layout_width="233dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"
+        android:background="#FFFFFF"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="2"
+            android:padding="10dp"
+            android:text="@string/title"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000000"
+            android:minHeight="20dp"
+            android:maxHeight="40dp" />
+
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_weight="0.2"
+        android:columnCount="1" >
+
+        <ImageView
+            android:id="@+id/itemStateIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_column="0"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_row="0"
+            android:src="@drawable/ic_chevron_right_black_24dp" />
+    </GridLayout>
+
+    
+
+</LinearLayout>

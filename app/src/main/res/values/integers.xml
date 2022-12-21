@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="index_drawable_system_group">0</integer>
+    <integer name="index_drawable_collection_group">1</integer>
+    <integer name="index_drawable_chief_room">2</integer>
+    <integer name="index_drawable_editorial_group">3</integer>
+    <integer name="index_drawable_information_group">4</integer>
+    <integer name="index_drawable_medical_branch">5</integer>
+    <integer name="index_drawable_multimedia">6</integer>
+    <integer name="index_drawable_periodical_group">7</integer>
+    <integer name="index_drawable_reading_group">8</integer>
+</resources>

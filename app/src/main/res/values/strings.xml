@@ -1,0 +1,191 @@
+<resources>
+    <string name="app_name">成功大學圖書館</string>
+    <string name="action_settings">設定</string>
+
+    <!-- 設定值 -->
+    <string-array name="unit_array">
+        <item>系統管理組</item>
+        <item>典藏組</item>
+        <item>行政室</item>
+        <item>採編組</item>
+        <item>資訊服務組</item>
+        <item>醫學院圖書分館</item>
+        <item>多媒體視聽組</item>
+        <item>期刊組</item>
+        <item>閱覽組</item>
+        <item>綜合館務組</item>
+        <item>典藏閱覽組</item>
+        <item>系統資訊組</item>
+        <item>知識服務組</item>
+        <item>推廣服務組</item>
+    </string-array>
+    <string-array name="lib_info_list">
+        <item>開放時間</item>
+        <item>樓層簡介</item>
+        <item>聯絡資訊</item>
+        <item>地理位置</item>
+    </string-array>
+    <string-array name="lib_open_time_unit_list">
+        <item>總圖書館</item>
+        <item>自修閱覽室（K館）</item>
+        <item>學習開放空間(敬三)</item>
+        <item>醫學院圖書分館</item>
+        <item>各系所及院圖</item>
+    </string-array>
+
+    <!-- 側滑選單 -->
+    <string name="home_page">首頁</string>
+    <string name="messenger">推播訊息</string>
+    <string name="login">登入</string>
+    <string name="copyright">©2020 國立成功大學版權所有</string>
+    <string name="version">App 版本:2.1</string>
+<!--    0.1320220519-->
+    <!-- 主頁功能名稱 -->
+    <string name="homepage_ic_info">本館資訊</string>
+    <string name="homepage_ic_news">最新消息</string>
+    <string name="homepage_ic_search">館藏查詢</string>
+    <string name="homepage_ic_barrow">個人借閱</string>
+    <string name="homepage_ic_activity">近期活動</string>
+    <string name="homepage_ic_occupancy">席位使用</string>
+
+    <!-- 設定或Toast訊息 -->
+    <string name="subscription_title">訂閱推播訊息</string>
+    <string name="dialog_subscription">請問確定要改變訂閱狀態嗎？</string>
+    <string name="dialog_close_confirm">請問確定要結束嗎？</string>
+    <string name="messenger_network_disconnected">請保持網路暢通，才能取得最新資訊</string>
+    <string name="network_disconnected">此功能需要網路連線，請連上網路後重試</string>
+    <string name="invalid_account_or_password">錯誤的帳號或密碼</string>
+    <string name="login_tip">目前僅開放本校教職員工生登入。帳密同成功入口。</string>
+    <string name="confirm">確定</string>
+    <string name="cancel">取消</string>
+    <string name="setting">設定</string>
+    <string name="setting_hint">您尚未開啟訂閱按鈕，請前往</string>
+    <string name="is_loading">正在加載</string>
+    <string name="reloading">下拉或點擊可以加載</string>
+    <string name="news_empty">沒有任何最新消息</string>
+    <string name="no_maps">無法使用GoogleMap</string>
+    <string name="map_network">請打開網路，方便使用GoogleMap</string>
+    <string name="search_bar_hint">輸入關鍵字以查詢本館館藏</string>
+    <string name="not_match_isbn">錯誤的ISBN，請掃描書背面的Barcode</string>
+    <string name="msg_empty">沒有任何推播訊息</string>
+    <string name="subscription_tip">完成離校/職手續後，則自動取消推播通知</string>
+    <string name="please_wait">請稍後</string>
+    <string name="handle_subscription">正在處理您的訂閱</string>
+    <string name="sub_handled">訂閱處理完成</string>
+    <string name="login_success">登入成功</string>
+    <string name="login_attempt_3_times">由於您嘗試登入失敗次數過多，已被限制登入，請於15分鐘後再試。</string>
+    <string name="sub_fail">訂閱處理失敗，請重新嘗試</string>
+    <string name="delete">刪除</string>
+    <string name="multiSelect">多選</string>
+    <string name="account">帳號相關</string>
+    <string name="link">相關連結</string>
+    <string name="additional">相關附件</string>
+    <string name="contact_phone">聯絡電話</string>
+    <string name="default_name">使用者</string>
+    <string name="login_title">歡迎您</string>
+    <string name="termTime">學期中</string>
+    <string name="vacations">寒暑假</string>
+    <string name="termTime_eng">Term times</string>
+    <string name="vacations_eng">Vacations</string>
+    <string name="visitors_main">總館人數 :</string>
+    <string name="visitors_k">新 K 館 1F 人數 :</string>
+    <string name="visitors_k2">新 K 館 2F 人數 :</string>
+    <string name="wait_update">--</string>
+    <string name="update_fail">更新失敗</string>
+    <string name="copy_success">複製成功</string>
+    <string name="homepage_main">\u0020\u0020總館\u0020\u0020</string>
+    <string name="homepage_knowledge">\u0020\u0020新K館\u0020\u0020</string>
+    <string name="login_privacy">我同意成大圖書館 隱私權條款 </string>
+    <!--    席位使用頁面    -->
+    <string name="current_occupancy">在館人數:\u0020</string>
+    <string name="total_occupancy">\n總席次:\u0020</string>
+    <string name="manage_dept">管理單位:\u0020</string>
+    <string name="contact_extension">聯絡分機:\u0020</string>
+    <string name="occupancy_warn_message">本頁面各場館人數僅供參考，\n實際人數以現場為主。</string>
+    <string name="manage_rule">管理規則</string>
+    <string name="show_map">顯示地圖</string>
+    <string name="more_info">更多資訊</string>
+    <string name="open24hr">24小時開放場館</string>
+    <!-- 系統用無需翻譯 -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps" translatable="false">Map</string>
+    <!--<string name="gcm_defaultSenderId">645919590322</string>-->
+    <string name="subscription">MESSAGER_SUBSCRIPTION</string>
+    <string name="title">標題</string>
+    <string name="unit">單位</string>
+    <string name="time">時間</string>
+    <string name="drawer_open">打開</string>
+    <string name="drawer_close">關閉</string>
+
+
+    <string name="pwHint">密碼(Password)</string>
+    <string name="urHint">帳號(Username)</string>
+    <string name="forgot_pwd">忘記密碼?</string>
+    <string name="deleteHint">確認刪除?</string>
+    <string name="sub_hint">是否訂閱推播訊息?(若目前選擇否，之後可從「設定」修改)</string>
+    <string name="scan_isbn">請掃描一個ISBN碼</string>
+    <string name="ncku_library_web_page_img">NCKU Library Web Page</string>
+
+    <!-- 按首頁畫面，連結到圖書館網頁的一些翻譯內容 -->
+    <string name="go_to_lib_web_page">請問要前往圖書館網頁嗎?</string>
+    <string name="back_to_app">回到 App</string>
+    <string name="go_to_spacemgr_web_page">請問要前往圖書館空間管理系統網頁嗎?</string>
+    <string name="go_to_fbfanpage">請問要前往圖書館FB粉絲團嗎?</string>
+    <string name="go_to_curoccupancy_web_page">請問要前往圖書館座位使用網頁嗎?</string>
+    <string name="go_to_rule_web_page">請問要前往管理規則頁面嗎?</string>
+    <string name="go_to_info_web_page">請問要前往該館的頁面(粉專)嗎?</string>
+    <!--檢查登入狀態的訊息-->
+    <string name="login_state_message">檢查登入狀態中</string>
+    <string name="login_detect_error">沒有網路無法檢查是否登入</string>
+    <string name="approval">登入認證成功</string>
+    <string name="disapproval"></string>
+    <string name="password_contains_invalid_character">密碼包含有疑慮的字元，請聯繫圖書館</string>
+
+    <!--隱私權政策 20200720 modified>
+    <string name="privacy_policy"><![CDATA[<body><p style="color:red">隱私權保護政策的適用範圍</p><p><span>1. </span><span>本隱私政策適用於您在成功大學圖書館行動應用程式，以及其延伸服務網站等所涉及的個人資料之蒐集、運用與保護。但不適用於您經由本行動應用程式連結至其他網站後所進行之活動，關於其他網站的個人資料之保護，適用其各自之隱私權保護政策，本行動應用程式不負任何連帶責任。</span></p><p><span>2. </span><span>成功大學圖書館行動應用程式就特定目的與本圖書館服務範圍內，收集及處理您的個人資料。</span></p><p class="P7"> </p><p> </p><p><span>3. </span><span>成功大學圖書館行動應用程式所要求的個人資料包括您的學生證號或職員證號及成功入口密碼供身份驗證登入使用，在本應用程式內僅儲存您的學生證號或職員證號。</span></p><p> </p><p> </p><p><span>4. </span><span>於成功大學圖書館行動應用程式登入後，會將您的應用程式代碼、作業系統資訊、瀏覽和登入時間存置本館伺服器資料庫中並作流量和網路行為調查，以利於提昇本應用程式的服務品質。</span></p><p> </p><p> </p><p><span>5. </span><span>國立成功大學圖書館會致力確保所有透過本應用程式提供的個人資料均會按照《個人資料保護法》的相關條文處理。</span></p><p><span>有關國立成功大學隱私權及資訊安全政策的詳情，請瀏覽網頁：</span><span>https://app.lib.ncku.edu.tw/privacy.xhtml</span></p><p class="P7"> </p><p>成功大學圖書館行動應用程式，將會視您使用之功能要求存取您的下列權限，請視您的需求進行授權：</p><p> </p><p><span>1. </span><span>需要開啟您裝置的網路權限，以使用各項線上服務與接收推播訊息。</span></p><p><span>2. </span><span>需要使用您裝置的相機，以辨識</span><span>ISBN</span><span>條碼查詢館藏書籍。</span></p><p><span>3. </span><span>需要取用您裝置的通知功能，允許應用程式接收與顯示推播訊息。</span></p>]]></string-->
+    <string name="privacy_policy"><![CDATA[<body>
+	<p><h5>個人資料蒐集、處理、利用條款如下:</h5></p>
+	<p>
+		<h5>隱私權保護政策的適用範圍</h5>
+		<br>
+		<span>本個人資料蒐集、處理、利用條款適用於您在成功大學圖書館行動應用程式及其服務，以及其延伸服務網站等所涉及的個人資料之蒐集、處理、利用運用、與保護。但不適用於您經由本行動應用程式連結至其他網站後所進行之活動，關於其他網站的個人資料之保護，適用其各自之保護政策，本行動應用程式及成功大學圖書館不負任何責任。</span>
+	</p>
+	<p>
+	<p>
+		<h5>資料的蒐集與使用方式</h5>
+
+	</p>
+		<p>
+		<span>1. </span>
+		<span>成功大學圖書館行動應用程式就推廣及提供本圖書館行動服務之特定目的，於適當及必要範圍內，蒐集、處理及利用您的個人資料。</span></p>
+		<p>
+		<span>2. </span>
+		<span>成功大學圖書館行動應用程式所要求的個人資料，包括您的學生證號或職員證號及成功入口密碼供身份驗證登入使用，在本應用程式內僅儲存您的學生證號或職員證號與姓名。</span></p>
+		<p>
+		<span>3. </span>
+		<span>於成功大學圖書館行動應用程式登入後，會將您的應用程式代碼、作業系統資訊、瀏覽和登入時間存置本館伺服器資料庫中並作流量和網路行為調查，以利於提昇本應用程式的服務品質。</span></p>
+		<p>
+		<span>4. </span>
+		<span>國立成功大學圖書館會致力確保所有透過本應用程式提供的個人資料均會按照《<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=I0050021">個人資料保護法</a>》的相關條文處理。</span></p>
+		<p>
+		<span>有關國立成功大學隱私權及資訊安全政策的詳情，請瀏覽網頁：<a href="https://app.lib.ncku.edu.tw/privacy.xhtml">https://app.lib.ncku.edu.tw/privacy.xhtml</a> </span>
+		</p>
+
+
+		<p><h5>成功大學圖書館行動應用程式，將會視您使用之功能要求存取您的下列權限，請視您的需求進行授權：</h5></p>
+		<p>
+			<span>1. </span>
+			<span>需要開啟您裝置的網路權限，以使用各項線上服務與接收推播訊息。</span></p>
+			<p>
+			<span>2. </span>
+			<span>需要使用您裝置的相機，以辨識</span>
+			<span>ISBN</span>
+			<span>條碼查詢館藏書籍。</span></p>
+			<p>
+			<span>3. </span>
+			<span>需要取用您裝置的通知功能，允許應用程式接收與顯示推播訊息。</span></p>
+]]></string>
+    <!--安全性提示 20201123 modified-->
+    <string name="login_failed">連線失敗</string>
+    <string name="ssl_hint">請移除代理伺服器設定後再嘗試連線。</string>
+</resources>

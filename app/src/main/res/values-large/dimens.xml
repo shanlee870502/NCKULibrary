@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="drawer_img_size">24dp</dimen>
+
+<!--    <dimen name="padding_footer_top">50dp</dimen>-->
+    <dimen name="padding_visitors_top">20dp</dimen>
+    <dimen name="padding_visitors">10dp</dimen>
+</resources>
