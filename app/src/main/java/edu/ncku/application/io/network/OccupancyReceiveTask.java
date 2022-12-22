@@ -77,7 +77,6 @@ public class OccupancyReceiveTask implements Runnable, IOConstatnt{
                 if(isBackground){
                     ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
                     executor.schedule(new OccupancyReceiveTask(mContext, true, false), 10, TimeUnit.SECONDS);
-//                    Log.i("Occupancy","hehe i refresh!");
                 }
             }else{ //network not connected
                 if(isBackground){

@@ -39,6 +39,7 @@ import edu.ncku.application.io.IOConstatnt;
 import edu.ncku.application.io.network.PinnedSSLContextFactory;
 import edu.ncku.application.util.EnvChecker;
 import edu.ncku.application.util.ITitleChangeListener;
+import edu.ncku.application.util.SSLChecker;
 
 /**
  * 開啟IR搜尋網頁，如果有關鍵字的參數則一併輸入，同時會檢查語言環境
@@ -131,6 +132,7 @@ public class IRSearchFragment extends Fragment implements IOConstatnt{
 
         webView.setWebViewClient(new WebViewClient() {
             //20201123 實作ssl error handler，若發生錯誤則返回首頁
+            SSLChecker ssl_checker = new SSLChecker(webView);
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
                 handler.cancel();
@@ -155,60 +157,10 @@ public class IRSearchFragment extends Fragment implements IOConstatnt{
             @Nullable
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-
-                return checkSsl(view, url);
+                WebResourceResponse result = ssl_checker.checkSsl(view, url, sslContext);
+                return result;
             }
 
-            private WebResourceResponse checkSsl(WebView view, String uri) {
-
-                URLConnection urlConnection = null;
-                try {
-                    URL url = new URL(uri);
-                    urlConnection = url.openConnection();
-                    if(urlConnection instanceof HttpsURLConnection) {
-                        HttpsURLConnection httpsURLConnection = (HttpsURLConnection) urlConnection;
-                        httpsURLConnection.setInstanceFollowRedirects(false);
-                        httpsURLConnection.setSSLSocketFactory(sslContext.getSocketFactory());
-                        httpsURLConnection.setHostnameVerifier(new HostnameVerifier() {
-                            @Override
-                            public boolean verify(String hostname, SSLSession session) {
-                                return true;
-                            }
-                        });
-                        int respCode = httpsURLConnection.getResponseCode();
-                        if (respCode == 301 || respCode == 302) {
-                            httpsURLConnection.disconnect();
-                            return super.shouldInterceptRequest(view, uri);
-                        }
-                        if(respCode != 200){
-                            httpsURLConnection.disconnect();
-                            return super.shouldInterceptRequest(view, uri);
-                        }
-                    }
-                    InputStream is = urlConnection.getInputStream();
-                    String contentType = urlConnection.getContentType();
-                    String encoding = urlConnection.getContentEncoding();
-                    if (contentType != null) {
-                        String mimeType = contentType;
-
-                        if (contentType.contains(";")) {
-                            mimeType = contentType.split(";")[0].trim();
-                        }
-                        return super.shouldInterceptRequest(view, uri);
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if(urlConnection != null){
-                    if(urlConnection instanceof HttpsURLConnection){
-                        ((HttpsURLConnection)urlConnection).disconnect();
-                    }
-                }
-                isVerified = false;
-
-                return new WebResourceResponse(null, null, null);
-            }
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
