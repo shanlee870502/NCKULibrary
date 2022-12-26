@@ -46,18 +46,18 @@ public class OccupancyReceiveTask implements Runnable, IOConstatnt{
 
             if(currentNetworkInfo!=null && currentNetworkInfo.isConnected()) {
                 Map<String,String> occupancy = new HashMap<String,String>();
-                occupancy.put("mainlib","");
-                occupancy.put("knowledge","");
-                occupancy.put("medlib","");
+                occupancy.put("main_lib","");
+                occupancy.put("knowLEDGE","");
+                occupancy.put("kun_yen","");
                 occupancy.put("d24","");
-                occupancy.put("xcollege","");
+                occupancy.put("future_venue","");
 
                 try{
-                    occupancy.put("mainlib", HttpsClient.sendPost(Mainlib_API,""));
-                    occupancy.put("knowledge",HttpsClient.sendPost(KnowLEDGE_API, "").trim());
-                    occupancy.put("medlib",HttpsClient.sendPost(Medlib_API,"").trim());
+                    occupancy.put("main_lib", HttpsClient.sendPost(Mainlib_API,""));
+                    occupancy.put("knowLEDGE",HttpsClient.sendPost(KnowLEDGE_API, "").trim());
+                    occupancy.put("kun_yen",HttpsClient.sendPost(Medlib_API,"").trim());
                     occupancy.put("d24", HttpsClient.sendPost(D24_API,"").trim());
-                    occupancy.put("xcollege",HttpsClient.sendPost(Xcollege_API,"").trim());
+                    occupancy.put("future_venue",HttpsClient.sendPost(Xcollege_API,"").trim());
                 }catch (Exception e){
                     Log.i("Occupancy","Https send post failed");
                 }

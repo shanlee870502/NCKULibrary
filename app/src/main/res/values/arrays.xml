@@ -5,28 +5,20 @@
         <item>本館資訊</item>
     </string-array>
 <!--    席位使用頁面 分館資訊  -->
-    <string-array name="occupancy_list" >
+    <string-array name="dorm_name_list" >
         <item>總圖書館</item>
         <item>崑巖醫學圖書分館</item>
         <item>新K館</item>
         <item>學生創意討論空間 (D-24)</item>
         <item>未來館共學空間</item>
     </string-array>
-<!--    席位使用頁面 管理單位  -->
+<!--    席位使用頁面 分館的管理單位  -->
     <string-array name="manage_dept_list" >
         <item>""</item>
         <item>圖書館</item>
         <item>圖書館</item>
         <item>【學生事務處】活動發展組</item>
         <item>【教務處】發展中心</item>
-    </string-array>
-<!--    席位使用頁面 聯絡分機-->
-    <string-array name="contact_list" >
-        <item>""</item>
-        <item>#75120</item>
-        <item>#34906</item>
-        <item>#50360</item>
-        <item>#80926</item>
     </string-array>
 
 </resources>

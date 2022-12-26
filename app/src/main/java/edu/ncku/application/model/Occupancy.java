@@ -1,40 +1,69 @@
 package edu.ncku.application.model;
 
 
+import android.content.res.Resources;
+import android.util.Log;
+import android.util.Pair;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import edu.ncku.application.R;
+import edu.ncku.application.util.EnvChecker;
+
 public class Occupancy {
 
+    private String name_id;
     private String title;
-    private String subtitle;
+    private int cur_occupancy;
+    private int total_occupancy;
     private String manage_dept;
     private String contact;
     private int percentage;
-    private double lat;
-    private double lng;
+    private Pair<Double, Double> lat_lng;
 
-    public Occupancy(double percentage, String title, String subtitle, String manage_dept, String contact, double lat, double lng) { //int titleId
-        this.title = title;
-        this.subtitle = subtitle;
-        this.manage_dept = manage_dept;
+
+    public Occupancy(String name_id, String[] title_manage_lst,int cur_occupancy, int total_occupancy, String contact,Pair<Double, Double> lat_lng) { //int titleId
+        this.name_id = name_id;
+        this.title = title_manage_lst[0];
+        this.cur_occupancy = cur_occupancy;
+        this.total_occupancy = total_occupancy;
+        this.manage_dept = title_manage_lst[1];
         this.contact = contact;
-        this.percentage = (int)(percentage*100);
-        this.lat = lat;
-        this.lng = lng;
+        this.lat_lng = lat_lng;
+        this.percentage = this.cur_occupancy / this.total_occupancy;
     }
-
+    public String getNameID(){
+        return name_id;
+    }
     public String getTitle(){
         return title;
     }
-    public String getSubtitle() {
-        return subtitle;
+
+    public String getCurOccupancy() {
+        return String.valueOf(cur_occupancy);
     }
-    public String getManage_dept() {return manage_dept;}
-    public String getContact() {return contact;}
+
+    public void setCurOccupancy(int number){
+        this.cur_occupancy = number;
+    }
+    public String getTotalOccupancy(){
+        return String.valueOf(total_occupancy);
+    }
+    public void setTotalOccupancy(int number){
+        this.total_occupancy = number;
+    }
+    public String getManage_dept() {
+        return manage_dept;
+    }
+
+    public String getContact() { return contact; }
+
     public int getPercentage() {
         if (percentage>100){
             percentage=100;
         }
         return percentage;
     }
-    public Double getLat(){return lat;}
-    public Double getLng(){return lng;}
+    public Pair<Double, Double> getLatLng(){ return lat_lng;}
 }

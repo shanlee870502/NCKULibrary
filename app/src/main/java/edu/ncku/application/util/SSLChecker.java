@@ -2,7 +2,13 @@ package edu.ncku.application.util;
 
 import static edu.ncku.application.io.IOConstatnt.ISBN_SEARCH_URL_SSL;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.net.http.SslError;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
@@ -17,6 +23,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
+
+import edu.ncku.application.R;
 
 public class SSLChecker extends WebViewClient{
     private Boolean isVerified = true;

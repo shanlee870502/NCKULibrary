@@ -1,9 +1,8 @@
 package edu.ncku.application.adapter;
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -25,11 +24,14 @@ import edu.ncku.application.io.IOConstatnt;
 
 import com.timqi.sectorprogressview.ColorfulRingProgressView;
 
+import java.util.ArrayList;
+
 import edu.ncku.application.R;
 import edu.ncku.application.fragments.LibMapFragment;
 import edu.ncku.application.model.Occupancy;
 
 public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConstatnt {
+
     public OccupancyAdapter(Context context) {
         super(context, R.layout.fragment_occupancy_card);
     }
@@ -68,13 +70,17 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
             holder.occupancy_chart.setPercent(model.getPercentage());
             holder.percentTextView.setText(String.valueOf(model.getPercentage()));
             holder.dormTitle.setText(model.getTitle());
-            holder.dormSubtitle.setText(model.getSubtitle());
-            holder.manage_dept.setText(model.getManage_dept());
-            holder.contact.setText(model.getContact());
+            String cur_occupancy_txt = getContext().getResources().getString(R.string.current_occupancy) + model.getCurOccupancy();
+            String total_occupancy_txt = getContext().getResources().getString(R.string.total_occupancy) + model.getTotalOccupancy();
+            holder.dormSubtitle.setText(cur_occupancy_txt + total_occupancy_txt);
+            String manage_dept_txt = getContext().getResources().getString(R.string.manage_dept) + model.getManage_dept();
+            holder.manage_dept.setText(manage_dept_txt);
+            String contact_txt = getContext().getResources().getString(R.string.contact_extension) + model.getContact();
+            holder.contact.setText(contact_txt);
 
             /* Special Setting for some row */
             String[] occupancy_list = getContext().getResources().getStringArray(
-                    R.array.occupancy_list);
+                    R.array.dorm_name_list);
             //mainlib setting
             if (model.getTitle().equals(occupancy_list[0])) {
                 // 總圖沒有管理單位以及聯絡分機 文字置中
@@ -85,8 +91,8 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
             // popUp Menu Setting
             final String rule_url = getRuleURL(model.getTitle());
             final String info_url = getInfoURL(model.getTitle());
-            final double lat = model.getLat();
-            final double lng = model.getLng();
+            final double lat = model.getLatLng().first;
+            final double lng = model.getLatLng().second;
 
             holder.three_dot_button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -103,7 +109,7 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
     private String getRuleURL(String name) {
         String URL = null;
         String[] occupancy_list = getContext().getResources().getStringArray(
-                R.array.occupancy_list);
+                R.array.dorm_name_list);
         for(int i=0; i<occupancy_list.length;i++){
             if(name.equals(occupancy_list[i])){
                 switch(i) {
@@ -130,7 +136,7 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
     private String getInfoURL(String name) {
         String URL = null;
         String[] occupancy_list = getContext().getResources().getStringArray(
-                R.array.occupancy_list);
+                R.array.dorm_name_list);
 
         // check facebook app is installed or not
         ApplicationInfo ai = null;
