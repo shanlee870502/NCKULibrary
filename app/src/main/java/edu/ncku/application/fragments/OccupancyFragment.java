@@ -1,10 +1,13 @@
 package edu.ncku.application.fragments;
 
+import static edu.ncku.application.util.EnvChecker.isNetworkConnected;
+
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -19,15 +22,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import edu.ncku.application.R;
 import edu.ncku.application.adapter.OccupancyAdapter;
 import edu.ncku.application.io.IOConstatnt;
-import edu.ncku.application.io.network.OccupancyLimitTask;
-import edu.ncku.application.io.network.OccupancyReceiveTask;
 import edu.ncku.application.model.Occupancy;
 
 public class OccupancyFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, IOConstatnt{
@@ -41,35 +39,25 @@ public class OccupancyFragment extends Fragment implements SwipeRefreshLayout.On
     public OccupancyFragment(){
 
     }
+
     public static Fragment newInstance() {
         OccupancyFragment fragment = new OccupancyFragment();
         return fragment;
     }
-    @Override
-    public void onRefresh() {
 
-    }
-    public void OnCreate(Bundle savedInstanceSate){
+    @Override
+    public void onCreate(Bundle savedInstanceSate){
         super.onCreate(savedInstanceSate);
-        refreshOccupancyLimit();
-        refreshVisitor();
+
+        setHasOptionsMenu(true); // 使fragment驅動onCreateOptionsMenu
+
         IntentFilter filter1 = new IntentFilter();
         filter1.addAction("android.intent.action.OCCUPANCY_RECEIVER");
-        getActivity().getApplicationContext().registerReceiver(mOccypancyReceiver, filter1);
+        getActivity().getApplicationContext().registerReceiver(mOccupancyReceiver, filter1);
 
         IntentFilter filter2 = new IntentFilter();
         filter2.addAction("android.intent.action.OCCUPANCY_LIMIT_RECEIVER");
         getActivity().getApplicationContext().registerReceiver(mOccupancyLimitReceiver, filter2);
-    }
-    private void refreshOccupancyLimit(){
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        executor.schedule(new OccupancyLimitTask(getActivity().getApplicationContext()), 1, TimeUnit.SECONDS);
-        executor.shutdown();
-    }
-    private void refreshVisitor(){
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        executor.schedule(new OccupancyReceiveTask(getActivity().getApplicationContext(), true, true), 1, TimeUnit.SECONDS);
-        executor.shutdown();
     }
 
     @Override
@@ -103,9 +91,10 @@ public class OccupancyFragment extends Fragment implements SwipeRefreshLayout.On
         View rootView = inflater.inflate(R.layout.fragment_occupancy, container,
                 false);
         occupancyViewer = rootView.findViewById(R.id.occupancyListView);
-        occupancyViewer.setAdapter(adapter);
+
 
         load_occupancy_lst();
+
         adapter = new OccupancyAdapter(getActivity());
         for(int i=0 ; i < occupancy_lst.size() ; i++){
             if (i == 0){
@@ -119,6 +108,7 @@ public class OccupancyFragment extends Fragment implements SwipeRefreshLayout.On
                 adapter.add(occupancy_lst.get(i));
             }
         }
+        occupancyViewer.setAdapter(adapter);
         return rootView;
     }
     private BroadcastReceiver mOccupancyLimitReceiver = new BroadcastReceiver() {
@@ -131,22 +121,42 @@ public class OccupancyFragment extends Fragment implements SwipeRefreshLayout.On
                     occupancy_lst.get(i).setTotalOccupancy(Integer.parseInt(occ_limit_arr.get(i)));
                 }
             }
+            adapter.notifyDataSetChanged();
+
         }
     };
-    private BroadcastReceiver mOccypancyReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mOccupancyReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
-
             if(bundle != null) {
-
                 for(int i=0; i< occupancy_lst.size(); i++){
                     String name_id = occupancy_lst.get(i).getNameID();
                     occupancy_lst.get(i).setCurOccupancy(Integer.parseInt(bundle.getString(name_id, null)));
-                    Log.d("tttt"+name_id, bundle.getString(name_id, null));
                 }
             }
+            adapter.notifyDataSetChanged();
         }
     };
 
+    @Override
+    public void onRefresh() {
+
+    }
+    @Override
+    public void onResume() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(!isNetworkConnected(getContext())){
+                getFragmentManager().popBackStack();
+            }
+        }
+        super.onResume();
+    }
+    @Override
+    public void onDestroy() {
+        occupancy_lst.clear();
+        getActivity().getApplicationContext().unregisterReceiver(mOccupancyReceiver);
+        getActivity().getApplicationContext().unregisterReceiver(mOccupancyLimitReceiver);
+        super.onDestroy();
+    }
 }

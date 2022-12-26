@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import edu.ncku.application.util.EnvChecker;
 import android.view.LayoutInflater;
@@ -25,6 +26,8 @@ import edu.ncku.application.io.IOConstatnt;
 import com.timqi.sectorprogressview.ColorfulRingProgressView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 import edu.ncku.application.R;
 import edu.ncku.application.fragments.LibMapFragment;
@@ -42,7 +45,6 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
         ViewHolder holder;
 
         if(position == 0){
-
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             convertView = inflater.inflate(R.layout.fragment_occupancy_section_notify, parent, false);
@@ -66,31 +68,30 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
 
             convertView.setTag(holder);
 
+            String cur_occupancy_txt = getContext().getResources().getString(R.string.current_occupancy) + model.getCurOccupancy();
+            String total_occupancy_txt = getContext().getResources().getString(R.string.total_occupancy) + model.getTotalOccupancy();
+            String manage_dept_txt = getContext().getResources().getString(R.string.manage_dept) + model.getManage_dept();
+            String contact_txt = getContext().getResources().getString(R.string.contact_extension) + model.getContact();
 
             holder.occupancy_chart.setPercent(model.getPercentage());
             holder.percentTextView.setText(String.valueOf(model.getPercentage()));
             holder.dormTitle.setText(model.getTitle());
-            String cur_occupancy_txt = getContext().getResources().getString(R.string.current_occupancy) + model.getCurOccupancy();
-            String total_occupancy_txt = getContext().getResources().getString(R.string.total_occupancy) + model.getTotalOccupancy();
             holder.dormSubtitle.setText(cur_occupancy_txt + total_occupancy_txt);
-            String manage_dept_txt = getContext().getResources().getString(R.string.manage_dept) + model.getManage_dept();
             holder.manage_dept.setText(manage_dept_txt);
-            String contact_txt = getContext().getResources().getString(R.string.contact_extension) + model.getContact();
             holder.contact.setText(contact_txt);
 
-            /* Special Setting for some row */
-            String[] occupancy_list = getContext().getResources().getStringArray(
-                    R.array.dorm_name_list);
+
             //mainlib setting
-            if (model.getTitle().equals(occupancy_list[0])) {
+            if (model.getNameID().equals("main_lib")) {
                 // 總圖沒有管理單位以及聯絡分機 文字置中
                 holder.dormTitle.setPadding(8, 80, 0, 0);
+                holder.manage_dept.setText("");
+                holder.contact.setText("");
             }
-
 
             // popUp Menu Setting
             final String rule_url = getRuleURL(model.getTitle());
-            final String info_url = getInfoURL(model.getTitle());
+            final String info_url = getInfoURL(model.getNameID());
             final double lat = model.getLatLng().first;
             final double lng = model.getLatLng().second;
 
@@ -134,56 +135,29 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
         return URL;
     }
     private String getInfoURL(String name) {
-        String URL = null;
-        String[] occupancy_list = getContext().getResources().getStringArray(
-                R.array.dorm_name_list);
-
         // check facebook app is installed or not
-        ApplicationInfo ai = null;
         boolean fb_install = true;
         try {
-            ai = getContext().getPackageManager().getApplicationInfo("com.facebook.katana", 0);
+            getContext().getPackageManager().getApplicationInfo("com.facebook.katana", 0);
         } catch (PackageManager.NameNotFoundException e){
             fb_install = false;
         }
 
-        for(int i=0; i<occupancy_list.length;i++){
-            if(name.equals(occupancy_list[i])){
-                switch(i) {
-                    case 0: // mainlib
-                        break;
-                    case 1: //medlib
-                        URL = Medlib_INFO_URL_SSL;
-                        break;
-                    case 2: //knowLEDGE
-                        break;
-                    case 3: //D24-> facebook fanpage
-                        if(!fb_install){ // if not install fb app, open webpage
-                            URL = "https://www.facebook.com/NCKUSDAD/";
-                        }else{
-                            URL = D24_INFO_URL_SSL;
-                            if (EnvChecker.isLunarSetting()) {  // if it's chinese
-                                URL = URL+"cht";
-                            }else{
-                                URL = URL+"en";
-                            }
-                        } break;
-                    case 4: //Xcollege -> facebook fanpage
-                        if(!fb_install){ // if not install fb app, open webpage
-                            URL = "https://www.facebook.com/NCKU.Future.Venue/";
-                        }else{
-                            URL = Xcollege_INFO_URL_SSL;
-                            if (EnvChecker.isLunarSetting()) {  // if it's chinese
-                                URL = URL+"cht";
-                            }else{
-                                URL = URL+"en";
-                            }
-                        }
-                        break;
-                }
+        HashMap<String, String> url_map = new HashMap<>();
+        url_map.put("main_lib", null);
+        url_map.put("kun_yen", Medlib_INFO_URL_SSL);
+        url_map.put("knowLEDGE", null);
+
+        if(!fb_install){ // if not install fb app, open webpage
+            url_map.put("d24", D24_INFO_URL_SSL);
+            url_map.put("future_venue", Xcollege_INFO_URL_SSL);
+        }else{
+            if(EnvChecker.isLunarSetting()){
+                url_map.put("d24", D24_INFO_URL_SSL_FB);
+                url_map.put("future_venue", Xcollege_INFO_URL_SSL_FB);
             }
         }
-        return URL;
+        return url_map.get(name);
     }
 
     private void showPopUpMenu(final View v, final double lat, final double lng,

@@ -31,7 +31,6 @@ public class Occupancy {
         this.manage_dept = title_manage_lst[1];
         this.contact = contact;
         this.lat_lng = lat_lng;
-        this.percentage = this.cur_occupancy / this.total_occupancy;
     }
     public String getNameID(){
         return name_id;
@@ -60,6 +59,7 @@ public class Occupancy {
     public String getContact() { return contact; }
 
     public int getPercentage() {
+        percentage = cur_occupancy/total_occupancy;
         if (percentage>100){
             percentage=100;
         }

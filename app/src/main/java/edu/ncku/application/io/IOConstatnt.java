@@ -57,8 +57,10 @@ public interface IOConstatnt {
 
     //dorm info
     String Medlib_INFO_URL_SSL = "https://app.lib.ncku.edu.tw/redirect.php?dest=MedlibMoreInfo&lan=cht";
-    String D24_INFO_URL_SSL = "fb://page/156886274440";
-    String Xcollege_INFO_URL_SSL = "fb://page/106314247703479";
+    String D24_INFO_URL_SSL = "https://www.facebook.com/NCKUSDAD/";
+    String D24_INFO_URL_SSL_FB = "fb://page/156886274440";
+    String Xcollege_INFO_URL_SSL = "https://www.facebook.com/NCKU.Future.Venue/";
+    String Xcollege_INFO_URL_SSL_FB = "fb://page/106314247703479";
 
     //occupancy limit
     String OCC_LIMIT_URL_SSL = "https://app.lib.ncku.edu.tw/libweb/seatnum.php";
