@@ -31,31 +31,18 @@ public class ActivityInfo implements Serializable {
         return StartTime;
     }
 
-    public void setStartTime(Date startTime) {
-        StartTime = startTime;
-    }
-
     public Date getEndTime() {
         return EndTime;
     }
 
-    public void setEndTime(Date endTime) {
-        EndTime = endTime;
-    }
 
     public String getImgUrl() {
         return ImgUrl;
     }
 
-    public void setImgUrl(String imgUrl) {
-        ImgUrl = imgUrl;
-    }
 
     public String getActivityUrl() {
         return ActivityUrl;
     }
 
-    public void setActivityUrl(String activityUrl) {
-        ActivityUrl = activityUrl;
-    }
 }

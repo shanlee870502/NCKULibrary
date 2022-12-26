@@ -3,6 +3,7 @@ package edu.ncku.application.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import edu.ncku.application.R;
@@ -154,6 +156,8 @@ public class ListNewsAdapter extends BaseAdapter implements IOConstatnt{
             /* 取得單位字串陣列資源檔 */
             String[] unitStrings = convertView.getResources().getStringArray(R.array.unit_array);
             /*20200617 因應圖書館組織改造，新增組別並保留舊制*/
+
+
             final int SYSTEM_GROUP = 0,
                     COLLECTION_GROUP = 1,
                     CHIEF_ROOM = 2,

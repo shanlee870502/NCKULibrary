@@ -115,7 +115,6 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
             if(name.equals(occupancy_list[i])){
                 switch(i) {
                     case 0: // mainlib
-                        URL = LIB_RULE_URL_SSL; break;
                     case 1: //medlib
                         URL = LIB_RULE_URL_SSL; break;
                     case 2: //knowLEDGE

@@ -21,23 +21,14 @@ public class ContactInfo implements Serializable {
         return division;
     }
 
-    public void setDivision(String division) {
-        this.division = division;
-    }
 
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
