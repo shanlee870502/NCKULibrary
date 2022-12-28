@@ -4,44 +4,30 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
-import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
-import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 
-import javax.annotation.Nullable;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 
 import edu.ncku.application.R;
 import edu.ncku.application.io.IOConstatnt;
 import edu.ncku.application.io.network.PinnedSSLContextFactory;
 import edu.ncku.application.util.EnvChecker;
 import edu.ncku.application.util.ITitleChangeListener;
-import edu.ncku.application.util.SSLChecker;
+import edu.ncku.application.util.WebViewClientChecker;
 
 /**
  * 使用ISBN參數來向IR搜尋網頁取得相關資訊
@@ -50,7 +36,7 @@ public class IRISBNSearchFragment extends Fragment implements IOConstatnt{
     // TODO: Rename parameter arguments, choose names that match
     private static final String DEBUG_FLAG = IRISBNSearchFragment.class.getName();
 
-    //private static final String ISBN = "ISBN";
+    private static final String ISBN = "ISBN";
 
     //private static final String ISBN_SEARCH_URL = "http://m.lib.ncku.edu.tw/catalogs/ISBNBibSearch.php?lan=%s&ISBN=%s";
     //20201123 Add titlechangerListener
@@ -60,7 +46,7 @@ public class IRISBNSearchFragment extends Fragment implements IOConstatnt{
 
     private InputStream input;
     private SSLContext sslContext;
-    private Boolean isVerified = true;
+    private WebViewClient webViewClient;
 
     public static IRISBNSearchFragment newInstance(String isbn) {
         IRISBNSearchFragment fragment = new IRISBNSearchFragment();
@@ -123,62 +109,13 @@ public class IRISBNSearchFragment extends Fragment implements IOConstatnt{
             e.printStackTrace();
         }
 
-        webView.setWebViewClient(new WebViewClient() {
-            SSLChecker ssl_checker = new SSLChecker(webView);
+        webViewClient = new WebViewClientChecker(webView, this.getActivity(), ISBN_SEARCH_URL_SSL, sslContext);
+        webView.setWebViewClient(webViewClient);
+        if (((WebViewClientChecker) webViewClient).deleteFragment == true){
+            deleteFragment();
+        }
 
-
-            //20201123 實作ssl error handler，若發生錯誤則返回首頁
-            @Override
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                handler.cancel();
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                builder.setView(inflater.inflate(R.layout.ssl_alertbox, null));
-                builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        deleteFragment();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-            @Nullable
-            @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                WebResourceResponse result = ssl_checker.checkSsl(view, ISBN_SEARCH_URL_SSL, sslContext);
-                return result;
-            }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // TODO Auto-generated method stub
-                //20201125 when click the url, open new window
-                if (url != null &&  url.startsWith("https://eap.lib.ncku.edu.tw/recommend/")) {
-                    view.getContext().startActivity(
-                            new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-                    return true;
-                } else {
-                    return false;
-                }
-                //view.loadUrl(url);
-                //return true;
-            }
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                super.onReceivedError(view, request, error);
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                builder.setView(inflater.inflate(R.layout.ssl_alertbox, null));
-                builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        deleteFragment();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
-        if(isVerified) {
+        if(((WebViewClientChecker) webViewClient).isVerified) {
             webView.loadUrl(String.format(ISBN_SEARCH_URL_SSL, ((EnvChecker.isLunarSetting())?"cht":"eng"), isbn));
         }
 
@@ -206,7 +143,7 @@ public class IRISBNSearchFragment extends Fragment implements IOConstatnt{
     @Override
     public void onStart() {
         super.onStart();
-        if(!isVerified){
+        if(!((WebViewClientChecker) webViewClient).isVerified){
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             LayoutInflater inflater = getActivity().getLayoutInflater();
             builder.setView(inflater.inflate(R.layout.ssl_alertbox, null));
@@ -227,7 +164,16 @@ public class IRISBNSearchFragment extends Fragment implements IOConstatnt{
         titleChangeListener = null;
     }
     private void deleteFragment(){
-        titleChangeListener.deleteTitle();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.ssl_alertbox, null));
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                titleChangeListener.deleteTitle();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
     /************************************************/
 }

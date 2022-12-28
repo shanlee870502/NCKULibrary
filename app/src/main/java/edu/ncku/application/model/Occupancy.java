@@ -1,15 +1,7 @@
 package edu.ncku.application.model;
 
 
-import android.content.res.Resources;
-import android.util.Log;
 import android.util.Pair;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import edu.ncku.application.R;
-import edu.ncku.application.util.EnvChecker;
 
 public class Occupancy {
 
@@ -52,14 +44,13 @@ public class Occupancy {
     public void setTotalOccupancy(int number){
         this.total_occupancy = number;
     }
-    public String getManage_dept() {
+    public String getManageDept() {
         return manage_dept;
     }
 
     public String getContact() { return contact; }
-
     public int getPercentage() {
-        percentage = cur_occupancy/total_occupancy;
+        percentage = (cur_occupancy*100/total_occupancy);
         if (percentage>100){
             percentage=100;
         }

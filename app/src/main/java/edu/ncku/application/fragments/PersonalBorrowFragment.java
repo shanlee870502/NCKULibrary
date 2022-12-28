@@ -5,52 +5,32 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
-import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebViewDatabase;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import javax.annotation.Nullable;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
+
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 
 import edu.ncku.application.R;
 import edu.ncku.application.io.network.PinnedSSLContextFactory;
 import edu.ncku.application.util.CustomWebView;
 import edu.ncku.application.util.EnvChecker;
 import edu.ncku.application.util.ITitleChangeListener;
-import edu.ncku.application.util.SSLChecker;
-import kotlin.jvm.JvmOverloads;
+import edu.ncku.application.util.WebViewClientChecker;
+
 /**
  * 顯示個人借閱網頁頁面
  */
@@ -67,8 +47,7 @@ public class PersonalBorrowFragment extends Fragment {
 
     private InputStream input;
     private SSLContext sslContext;
-    private Boolean isVerified = true;
-
+    private WebViewClient webViewClient;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -126,63 +105,17 @@ public class PersonalBorrowFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        webViewClient = new WebViewClientChecker(webView, this.getActivity(), URL_SSL, sslContext);
+        webView.setWebViewClient(webViewClient);
+        if (((WebViewClientChecker) webViewClient).deleteFragment == true){
+            deleteFragment();
+        }
 
-        webView.setWebViewClient(new WebViewClient() {
-            //20201123 實作ssl error handler，若發生錯誤則返回首頁
-            SSLChecker ssl_checker = new SSLChecker(webView);
-
-
-            @Override
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                handler.cancel();
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                builder.setView(inflater.inflate(R.layout.ssl_alertbox, null));
-                builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        deleteFragment();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-            //實現對網頁中超連結的攔截，true表示不會執行
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // TODO Auto-generated method stub
-                view.loadUrl(url);
-                return true;
-            }
-
-            @Nullable
-            @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                WebResourceResponse result = ssl_checker.checkSsl(view, URL_SSL, sslContext);
-                return result;
-            }
-
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                super.onReceivedError(view, request, error);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                builder.setView(inflater.inflate(R.layout.ssl_alertbox, null));
-                builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        deleteFragment();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
-            }
-        });
         // disable autofill
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             webView.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO);
         }
-        if(isVerified) {
+        if(((WebViewClientChecker) webViewClient).isVerified) {
             webView.loadUrl(String.format(URL_SSL, (EnvChecker.isLunarSetting()) ? "" : "_eng"));
         }
 
@@ -218,17 +151,8 @@ public class PersonalBorrowFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(!isVerified){
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            builder.setView(inflater.inflate(R.layout.ssl_alertbox, null));
-            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    deleteFragment();
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
+        if(!((WebViewClientChecker) webViewClient).isVerified){
+            deleteFragment();
         }
     }
 
@@ -238,7 +162,16 @@ public class PersonalBorrowFragment extends Fragment {
         titleChangeListener = null;
     }
     private void deleteFragment(){
-        titleChangeListener.deleteTitle();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.ssl_alertbox, null));
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                titleChangeListener.deleteTitle();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
     /************************************************/
 }

@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -95,18 +94,17 @@ public class OccupancyFragment extends Fragment implements SwipeRefreshLayout.On
 
         load_occupancy_lst();
 
-        adapter = new OccupancyAdapter(getActivity());
+        adapter = new OccupancyAdapter(getActivity(), occupancy_lst);
         for(int i=0 ; i < occupancy_lst.size() ; i++){
             if (i == 0){
                 adapter.add(null);//加上以實際現場為主section(fragment_occypancy_section_notify)
-                adapter.add(occupancy_lst.get(i));
             }
             else{
                 if(i==2){
                     adapter.add(null); //加上24小時開放場館的section
                 }
-                adapter.add(occupancy_lst.get(i));
             }
+            adapter.add(occupancy_lst.get(i));
         }
         occupancyViewer.setAdapter(adapter);
         return rootView;
@@ -119,6 +117,7 @@ public class OccupancyFragment extends Fragment implements SwipeRefreshLayout.On
                 ArrayList<String> occ_limit_arr= bundle.getStringArrayList("limit_arr");
                 for(int i=0; i< occ_limit_arr.size();i++) {
                     occupancy_lst.get(i).setTotalOccupancy(Integer.parseInt(occ_limit_arr.get(i)));
+
                 }
             }
             adapter.notifyDataSetChanged();

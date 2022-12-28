@@ -1,14 +1,9 @@
 package edu.ncku.application.util;
 
-import static edu.ncku.application.io.IOConstatnt.ISBN_SEARCH_URL_SSL;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.net.http.SslError;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
@@ -18,24 +13,39 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import javax.annotation.Nullable;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
-import edu.ncku.application.R;
-
-public class SSLChecker extends WebViewClient{
-    private Boolean isVerified = true;
+public class WebViewClientChecker extends WebViewClient{
+    public Boolean isVerified = true;
+    public Boolean deleteFragment = false;
     public WebView view;
+    public Activity activity;
+    private String uri;
+    private SSLContext sslContext;
 
-
-    public SSLChecker(WebView view){
-        view = view;
+    public WebViewClientChecker(WebView view, Activity activity, String uri, SSLContext sslContext){
+        this.view = view;
+        this.activity = activity;
+        this.uri = uri;
+        this.sslContext = sslContext;
     }
 
-    public WebResourceResponse checkSsl(WebView view, String uri, SSLContext sslContext){
+    @Override
+    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+        deleteFragment = true;
+    }
+
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        // TODO Auto-generated method stub
+        view.loadUrl(url);
+        return true;
+    }
+
+    public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request){
         URLConnection urlConnection = null;
         try {
             URL url = new URL(uri);
@@ -86,5 +96,10 @@ public class SSLChecker extends WebViewClient{
         isVerified = false;
 
         return new WebResourceResponse(null, null, null);
+    }
+    @Override
+    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+        super.onReceivedError(view, request, error);
+        deleteFragment = true;
     }
 }

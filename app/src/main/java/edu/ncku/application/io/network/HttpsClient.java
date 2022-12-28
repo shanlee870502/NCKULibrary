@@ -1,7 +1,6 @@
 package edu.ncku.application.io.network;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

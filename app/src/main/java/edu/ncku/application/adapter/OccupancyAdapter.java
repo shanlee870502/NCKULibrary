@@ -1,17 +1,16 @@
 package edu.ncku.application.adapter;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import edu.ncku.application.util.EnvChecker;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +25,6 @@ import edu.ncku.application.io.IOConstatnt;
 import com.timqi.sectorprogressview.ColorfulRingProgressView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
 import edu.ncku.application.R;
@@ -35,20 +33,23 @@ import edu.ncku.application.model.Occupancy;
 
 public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConstatnt {
 
-    public OccupancyAdapter(Context context) {
+    public ArrayList<Occupancy> occupancyArrayList;
+    public OccupancyAdapter(Context context, ArrayList<Occupancy> occupancy_lst) {
         super(context, R.layout.fragment_occupancy_card);
+        this.occupancyArrayList = occupancy_lst;
+
     }
 
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-
+        OccupancyViewHolder holder;
+        Log.d("occupancy_arra_adapter", occupancyArrayList.get(0).getTitle());
         if(position == 0){
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             convertView = inflater.inflate(R.layout.fragment_occupancy_section_notify, parent, false);
-            holder = new ViewHolder(convertView);
+            holder = new OccupancyViewHolder(convertView);
 
             convertView.setTag(holder);
 
@@ -56,7 +57,7 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             convertView = inflater.inflate(R.layout.fragment_occupancy_section_24hr, parent, false);
-            holder = new ViewHolder(convertView);
+            holder = new OccupancyViewHolder(convertView);
 
             convertView.setTag(holder);
         }else{
@@ -64,20 +65,20 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             convertView = inflater.inflate(R.layout.fragment_occupancy_card, parent, false);
-            holder = new ViewHolder(convertView);
+            holder = new OccupancyViewHolder(convertView);
 
             convertView.setTag(holder);
 
             String cur_occupancy_txt = getContext().getResources().getString(R.string.current_occupancy) + model.getCurOccupancy();
             String total_occupancy_txt = getContext().getResources().getString(R.string.total_occupancy) + model.getTotalOccupancy();
-            String manage_dept_txt = getContext().getResources().getString(R.string.manage_dept) + model.getManage_dept();
+            String manage_dept_txt = getContext().getResources().getString(R.string.manage_dept) + model.getManageDept();
             String contact_txt = getContext().getResources().getString(R.string.contact_extension) + model.getContact();
 
             holder.occupancy_chart.setPercent(model.getPercentage());
-            holder.percentTextView.setText(String.valueOf(model.getPercentage()));
+            holder.percentText.setText(String.valueOf(model.getPercentage()));
             holder.dormTitle.setText(model.getTitle());
             holder.dormSubtitle.setText(cur_occupancy_txt + total_occupancy_txt);
-            holder.manage_dept.setText(manage_dept_txt);
+            holder.manageDept.setText(manage_dept_txt);
             holder.contact.setText(contact_txt);
 
 
@@ -85,7 +86,7 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
             if (model.getNameID().equals("main_lib")) {
                 // 總圖沒有管理單位以及聯絡分機 文字置中
                 holder.dormTitle.setPadding(8, 80, 0, 0);
-                holder.manage_dept.setText("");
+                holder.manageDept.setText("");
                 holder.contact.setText("");
             }
 
@@ -95,7 +96,7 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
             final double lat = model.getLatLng().first;
             final double lng = model.getLatLng().second;
 
-            holder.three_dot_button.setOnClickListener(new View.OnClickListener() {
+            holder.three_dot_bottom.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     v.setEnabled(false);
@@ -215,23 +216,23 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
         menu.show();
 
     }
-    static class ViewHolder {
+    static class OccupancyViewHolder {
         ColorfulRingProgressView occupancy_chart;
-        TextView percentTextView;
+        TextView percentText;
         TextView dormTitle;
         TextView dormSubtitle;
-        TextView manage_dept;
+        TextView manageDept;
         TextView contact;
-        ImageView three_dot_button;
+        ImageView three_dot_bottom;
 
-        ViewHolder(View view) {
+        OccupancyViewHolder(View view) {
             occupancy_chart = (ColorfulRingProgressView) view.findViewById(R.id.occupancy_chart);
-            percentTextView = (TextView) view.findViewById(R.id.occupancy_percent);
+            percentText = (TextView) view.findViewById(R.id.occupancy_percent);
             dormTitle = (TextView) view.findViewById(R.id.dorm_title);
             dormSubtitle = (TextView) view.findViewById(R.id.dorm_subtitle);
-            manage_dept = (TextView) view.findViewById(R.id.manage_dept);
+            manageDept = (TextView) view.findViewById(R.id.manage_dept);
             contact = (TextView) view.findViewById(R.id.contact);
-            three_dot_button = (ImageButton)view.findViewById(R.id.three_dot_button);
+            three_dot_bottom = (ImageButton)view.findViewById(R.id.three_dot_button);
         }
     }
 }

@@ -4,42 +4,30 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
-import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
-import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 
-import javax.annotation.Nullable;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 
 import edu.ncku.application.R;
 import edu.ncku.application.io.IOConstatnt;
 import edu.ncku.application.io.network.PinnedSSLContextFactory;
 import edu.ncku.application.util.EnvChecker;
 import edu.ncku.application.util.ITitleChangeListener;
-import edu.ncku.application.util.SSLChecker;
+import edu.ncku.application.util.WebViewClientChecker;
 
 /**
  * 開啟IR搜尋網頁，如果有關鍵字的參數則一併輸入，同時會檢查語言環境
@@ -58,8 +46,7 @@ public class IRSearchFragment extends Fragment implements IOConstatnt{
 
     private InputStream input;
     private SSLContext sslContext;
-    private Boolean isVerified = true;
-
+    private WebViewClient webViewClient;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -129,54 +116,12 @@ public class IRSearchFragment extends Fragment implements IOConstatnt{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        webView.setWebViewClient(new WebViewClient() {
-            //20201123 實作ssl error handler，若發生錯誤則返回首頁
-            SSLChecker ssl_checker = new SSLChecker(webView);
-            @Override
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                handler.cancel();
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                builder.setView(inflater.inflate(R.layout.ssl_alertbox, null));
-                builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        deleteFragment();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // TODO Auto-generated method stub
-                view.loadUrl(url);
-                return true;
-            }
-
-            @Nullable
-            @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                WebResourceResponse result = ssl_checker.checkSsl(view, url, sslContext);
-                return result;
-            }
-
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                super.onReceivedError(view, request, error);
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                builder.setView(inflater.inflate(R.layout.ssl_alertbox, null));
-                builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        deleteFragment();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
-        if(isVerified) {
+        webViewClient = new WebViewClientChecker(webView, this.getActivity(), url, sslContext);
+        webView.setWebViewClient(webViewClient);
+        if (((WebViewClientChecker) webViewClient).deleteFragment == true){
+            deleteFragment();
+        }
+        if(((WebViewClientChecker) webViewClient).isVerified) {
             webView.loadUrl(url);
         }
 
@@ -211,17 +156,8 @@ public class IRSearchFragment extends Fragment implements IOConstatnt{
     @Override
     public void onStart() {
         super.onStart();
-        if(!isVerified){
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            builder.setView(inflater.inflate(R.layout.ssl_alertbox, null));
-            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    deleteFragment();
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
+        if(!((WebViewClientChecker) webViewClient).isVerified){
+            deleteFragment();
         }
     }
 
@@ -231,7 +167,16 @@ public class IRSearchFragment extends Fragment implements IOConstatnt{
         titleChangeListener = null;
     }
     private void deleteFragment(){
-        titleChangeListener.deleteTitle();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.ssl_alertbox, null));
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                titleChangeListener.deleteTitle();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
     /************************************************/
 }
