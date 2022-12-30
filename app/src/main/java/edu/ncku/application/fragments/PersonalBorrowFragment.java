@@ -29,7 +29,7 @@ import edu.ncku.application.io.network.PinnedSSLContextFactory;
 import edu.ncku.application.util.CustomWebView;
 import edu.ncku.application.util.EnvChecker;
 import edu.ncku.application.util.ITitleChangeListener;
-import edu.ncku.application.util.WebViewClientChecker;
+import edu.ncku.application.util.WebViewChecker;
 
 /**
  * 顯示個人借閱網頁頁面
@@ -105,9 +105,9 @@ public class PersonalBorrowFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        webViewClient = new WebViewClientChecker(webView, this.getActivity(), URL_SSL, sslContext);
+        webViewClient = new WebViewChecker(webView, URL_SSL, sslContext);
         webView.setWebViewClient(webViewClient);
-        if (((WebViewClientChecker) webViewClient).deleteFragment == true){
+        if (((WebViewChecker) webViewClient).deleteFragment == true){
             deleteFragment();
         }
 
@@ -115,7 +115,7 @@ public class PersonalBorrowFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             webView.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO);
         }
-        if(((WebViewClientChecker) webViewClient).isVerified) {
+        if(((WebViewChecker) webViewClient).isVerified) {
             webView.loadUrl(String.format(URL_SSL, (EnvChecker.isLunarSetting()) ? "" : "_eng"));
         }
 
@@ -151,7 +151,7 @@ public class PersonalBorrowFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(!((WebViewClientChecker) webViewClient).isVerified){
+        if(!((WebViewChecker) webViewClient).isVerified){
             deleteFragment();
         }
     }

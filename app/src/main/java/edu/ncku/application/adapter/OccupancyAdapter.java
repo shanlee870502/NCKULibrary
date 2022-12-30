@@ -44,8 +44,8 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         OccupancyViewHolder holder;
-        Log.d("occupancy_arra_adapter", occupancyArrayList.get(0).getTitle());
-        if(position == 0){
+
+        if(position == 0){ // 實際現場為主section(fragment_occypancy_section_notify)
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             convertView = inflater.inflate(R.layout.fragment_occupancy_section_notify, parent, false);
@@ -53,7 +53,7 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
 
             convertView.setTag(holder);
 
-        }else if(position == 3) {
+        }else if(position == 3) { // 加上24小時開放場館的section
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             convertView = inflater.inflate(R.layout.fragment_occupancy_section_24hr, parent, false);
@@ -127,11 +127,7 @@ public class OccupancyAdapter extends ArrayAdapter<Occupancy> implements IOConst
                 }
             }
         }
-        if (EnvChecker.isLunarSetting()) {  // if it's chinese
-            URL = URL+"cht";
-        }else{
-            URL = URL+"en";
-        }
+        URL = EnvChecker.isLunarSetting()? URL+"cht": URL+"en";
         return URL;
     }
     private String getInfoURL(String name) {

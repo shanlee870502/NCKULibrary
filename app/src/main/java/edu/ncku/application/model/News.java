@@ -2,7 +2,9 @@ package edu.ncku.application.model;
 
 import java.io.Serializable;
 
-public class News implements Serializable {
+import edu.ncku.application.R;
+
+public class News  implements Serializable {
 
 	private String title;
 	private String unit;
@@ -48,3 +50,4 @@ public class News implements Serializable {
 	}
 	
 }
+

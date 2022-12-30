@@ -27,7 +27,7 @@ import edu.ncku.application.io.IOConstatnt;
 import edu.ncku.application.io.network.PinnedSSLContextFactory;
 import edu.ncku.application.util.EnvChecker;
 import edu.ncku.application.util.ITitleChangeListener;
-import edu.ncku.application.util.WebViewClientChecker;
+import edu.ncku.application.util.WebViewChecker;
 
 /**
  * 使用ISBN參數來向IR搜尋網頁取得相關資訊
@@ -109,13 +109,13 @@ public class IRISBNSearchFragment extends Fragment implements IOConstatnt{
             e.printStackTrace();
         }
 
-        webViewClient = new WebViewClientChecker(webView, this.getActivity(), ISBN_SEARCH_URL_SSL, sslContext);
+        webViewClient = new WebViewChecker(webView, ISBN_SEARCH_URL_SSL, sslContext);
         webView.setWebViewClient(webViewClient);
-        if (((WebViewClientChecker) webViewClient).deleteFragment == true){
+        if (((WebViewChecker) webViewClient).deleteFragment == true){
             deleteFragment();
         }
 
-        if(((WebViewClientChecker) webViewClient).isVerified) {
+        if(((WebViewChecker) webViewClient).isVerified) {
             webView.loadUrl(String.format(ISBN_SEARCH_URL_SSL, ((EnvChecker.isLunarSetting())?"cht":"eng"), isbn));
         }
 
@@ -143,7 +143,7 @@ public class IRISBNSearchFragment extends Fragment implements IOConstatnt{
     @Override
     public void onStart() {
         super.onStart();
-        if(!((WebViewClientChecker) webViewClient).isVerified){
+        if(!((WebViewChecker) webViewClient).isVerified){
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             LayoutInflater inflater = getActivity().getLayoutInflater();
             builder.setView(inflater.inflate(R.layout.ssl_alertbox, null));

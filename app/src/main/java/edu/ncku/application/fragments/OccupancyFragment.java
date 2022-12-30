@@ -17,23 +17,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import edu.ncku.application.R;
 import edu.ncku.application.adapter.OccupancyAdapter;
 import edu.ncku.application.io.IOConstatnt;
+import edu.ncku.application.io.network.OccupancyReceiveTask;
 import edu.ncku.application.model.Occupancy;
 
-public class OccupancyFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, IOConstatnt{
+public class OccupancyFragment extends Fragment implements IOConstatnt{
 
     private OccupancyAdapter adapter = null;
     private ListView occupancyViewer;
     private ArrayList<Occupancy> occupancy_lst = new ArrayList<>();
     private String [] dorm_id_lst = new String[]{"main_lib", "kun_yen", "knowLEDGE", "d24","future_venue"};
-    private HashMap<String, String[]> all_info = new HashMap<String, String[]>();
+    private HashMap<String, String[]> all_info = new HashMap<>();
 
     public OccupancyFragment(){
 
@@ -49,7 +51,7 @@ public class OccupancyFragment extends Fragment implements SwipeRefreshLayout.On
         super.onCreate(savedInstanceSate);
 
         setHasOptionsMenu(true); // 使fragment驅動onCreateOptionsMenu
-
+        refreshVisitor(); // 第一次載入時主動更新一次
         IntentFilter filter1 = new IntentFilter();
         filter1.addAction("android.intent.action.OCCUPANCY_RECEIVER");
         getActivity().getApplicationContext().registerReceiver(mOccupancyReceiver, filter1);
@@ -57,6 +59,12 @@ public class OccupancyFragment extends Fragment implements SwipeRefreshLayout.On
         IntentFilter filter2 = new IntentFilter();
         filter2.addAction("android.intent.action.OCCUPANCY_LIMIT_RECEIVER");
         getActivity().getApplicationContext().registerReceiver(mOccupancyLimitReceiver, filter2);
+    }
+
+    private void refreshVisitor(){
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+        executor.schedule(new OccupancyReceiveTask(getActivity().getApplicationContext(), true, true), 1, TimeUnit.SECONDS);
+        executor.shutdown();
     }
 
     @Override
@@ -138,10 +146,6 @@ public class OccupancyFragment extends Fragment implements SwipeRefreshLayout.On
         }
     };
 
-    @Override
-    public void onRefresh() {
-
-    }
     @Override
     public void onResume() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

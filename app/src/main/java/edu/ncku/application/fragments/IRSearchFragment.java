@@ -27,7 +27,7 @@ import edu.ncku.application.io.IOConstatnt;
 import edu.ncku.application.io.network.PinnedSSLContextFactory;
 import edu.ncku.application.util.EnvChecker;
 import edu.ncku.application.util.ITitleChangeListener;
-import edu.ncku.application.util.WebViewClientChecker;
+import edu.ncku.application.util.WebViewChecker;
 
 /**
  * 開啟IR搜尋網頁，如果有關鍵字的參數則一併輸入，同時會檢查語言環境
@@ -116,12 +116,12 @@ public class IRSearchFragment extends Fragment implements IOConstatnt{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        webViewClient = new WebViewClientChecker(webView, this.getActivity(), url, sslContext);
+        webViewClient = new WebViewChecker(webView, url, sslContext);
         webView.setWebViewClient(webViewClient);
-        if (((WebViewClientChecker) webViewClient).deleteFragment == true){
+        if (((WebViewChecker) webViewClient).deleteFragment == true){
             deleteFragment();
         }
-        if(((WebViewClientChecker) webViewClient).isVerified) {
+        if(((WebViewChecker) webViewClient).isVerified) {
             webView.loadUrl(url);
         }
 
@@ -156,7 +156,7 @@ public class IRSearchFragment extends Fragment implements IOConstatnt{
     @Override
     public void onStart() {
         super.onStart();
-        if(!((WebViewClientChecker) webViewClient).isVerified){
+        if(!((WebViewChecker) webViewClient).isVerified){
             deleteFragment();
         }
     }

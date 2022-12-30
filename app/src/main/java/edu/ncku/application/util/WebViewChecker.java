@@ -18,17 +18,15 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
-public class WebViewClientChecker extends WebViewClient{
+public class WebViewChecker extends WebViewClient{
     public Boolean isVerified = true;
     public Boolean deleteFragment = false;
     public WebView view;
-    public Activity activity;
     private String uri;
     private SSLContext sslContext;
 
-    public WebViewClientChecker(WebView view, Activity activity, String uri, SSLContext sslContext){
+    public WebViewChecker(WebView view, String uri, SSLContext sslContext){
         this.view = view;
-        this.activity = activity;
         this.uri = uri;
         this.sslContext = sslContext;
     }

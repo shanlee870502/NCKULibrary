@@ -15,8 +15,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.StrictMode;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -26,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -35,7 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.nostra13.universalimageloader.utils.L;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
 
@@ -46,7 +42,6 @@ import java.util.concurrent.TimeUnit;
 import edu.ncku.application.R;
 import edu.ncku.application.io.IOConstatnt;
 import edu.ncku.application.io.network.VisitorRecieveTask;
-import edu.ncku.application.model.Occupancy;
 import edu.ncku.application.util.AutoResizeEditText;
 import edu.ncku.application.util.EnvChecker;
 import edu.ncku.application.util.ITitleChangeListener;
@@ -63,7 +58,7 @@ public class HomePageFragment extends Fragment implements IOConstatnt{
 
     private Fragment mLibInfoListFragment;
     private Fragment mIRSearchFragment;
-    private Fragment mRecentActivityFragment;
+    private Fragment mUpcomingEventsFragment;
     private Fragment mNewsFragment;
     private Fragment mPersonalBorrowFragment;
     private Fragment mOccupancyFragment;
@@ -72,7 +67,7 @@ public class HomePageFragment extends Fragment implements IOConstatnt{
     private ImageView mNewsImageView;
     private ImageView mIRSearchImageView;
     private ImageView mPersonalBorrowImageView;
-    private ImageView mActivityImageView;
+    private ImageView mUpcomingEventsView;
     private ImageView mScannerImageView;
     // 20200422 2 ImageView added
     private ImageView mSpacemgrImageView;
@@ -118,7 +113,7 @@ public class HomePageFragment extends Fragment implements IOConstatnt{
         mNewsFragment = NewsFragment.getInstance(-1);
         mIRSearchFragment = IRSearchFragment.newInstance();
         mLibInfoListFragment = LibInfoListFragment.newInstance();
-        mRecentActivityFragment = UpcomingEventsFragment.newInstance();
+        mUpcomingEventsFragment = UpcomingEventsFragment.newInstance();
         mPersonalBorrowFragment = PersonalBorrowFragment.newInstance();
         mOccupancyFragment = OccupancyFragment.newInstance();
 
@@ -188,13 +183,13 @@ public class HomePageFragment extends Fragment implements IOConstatnt{
             }
 
         });
-        mActivityImageView = (ImageView) rootView.findViewById(R.id.activityImgBtn);
-        mActivityImageView.setOnClickListener(new View.OnClickListener() {
+        mUpcomingEventsView = (ImageView) rootView.findViewById(R.id.upcomingEventImgBtn);
+        mUpcomingEventsView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                addFragment(mRecentActivityFragment, getResources().getString(R.string.homepage_ic_activity));
+                addFragment(mUpcomingEventsFragment, getResources().getString(R.string.homepage_ic_activity));
             }
 
         });
