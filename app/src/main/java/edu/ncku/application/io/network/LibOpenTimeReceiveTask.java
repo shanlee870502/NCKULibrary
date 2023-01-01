@@ -22,9 +22,6 @@ import edu.ncku.application.io.IOConstatnt;
 //public class LibOpenTimeReceiveTask extends JsonReceiveTask  implements IOConstatnt {
 public class LibOpenTimeReceiveTask extends HttpsJsonReceiveTask  implements IOConstatnt {
     private static final String DEBUG_FLAG = LibOpenTimeReceiveTask.class.getName();
-
-    //20200527更改成https的網址
-    //private static final String JSON_LIB_INFO_URL = LIB_OPEN_TIME_URL;
     private static final String JSON_LIB_INFO_URL = LIB_OPEN_TIME_URL_SSL;
 
     private static final String FILE_NAME = LIB_OPEN_TIME_FILE;

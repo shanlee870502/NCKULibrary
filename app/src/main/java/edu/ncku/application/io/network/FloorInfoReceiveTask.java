@@ -21,8 +21,7 @@ import edu.ncku.application.io.IOConstatnt;
 //public class FloorInfoReceiveTask extends JsonReceiveTask implements IOConstatnt{
 public class FloorInfoReceiveTask extends HttpsJsonReceiveTask implements IOConstatnt{
     private static final String DEBUG_FLAG = FloorInfoReceiveTask.class.getName();
-    //2020525更改成https的網址
-    //private static final String JSON_URL = FLOOR_INFO_URL;
+
     private static final String JSON_URL = FLOOR_INFO_URL_SSL;
     private static final String FILE_NAME = FLOOR_INFO_FILE;
 

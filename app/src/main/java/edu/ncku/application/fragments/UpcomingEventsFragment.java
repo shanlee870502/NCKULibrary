@@ -78,9 +78,6 @@ public class UpcomingEventsFragment extends Fragment implements IOConstatnt{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true); // 使fragment驅動onCreateOptionsMenu
-
-//        final Context context = getActivity().getApplicationContext();
-//        LoadingData(context);
     }
 
     private void LoadingData(Context context) {
@@ -168,7 +165,6 @@ public class UpcomingEventsFragment extends Fragment implements IOConstatnt{
                         link = activityInfo.getActivityUrl();
                     }
                 }
-//                String link = imgSuperLinks.get(imgURLs[position % imgURLs.length]).getActivityUrl();
                 if(link != null && !link.isEmpty() && EnvChecker.pingGoogleDNS(context)) {
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
                     startActivity(i);

@@ -20,8 +20,6 @@ public class DetectLoginStateTask extends AsyncTask<Boolean, Void, Boolean> impl
 
     private static final String DEBUG_FLAG = DetectLoginStateTask.class.getName();
 
-    //20200603改成https網址
-    //private static final String Detect_URL = "http://140.116.207.50/push/detect_login_state.php";
     private static final String Detect_URL_SSL = "https://app.lib.ncku.edu.tw/push/detect_login_state.php";
     private Context mContext;
 

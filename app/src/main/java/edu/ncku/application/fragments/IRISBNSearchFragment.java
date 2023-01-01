@@ -38,7 +38,6 @@ public class IRISBNSearchFragment extends Fragment implements IOConstatnt{
 
     private static final String ISBN = "ISBN";
 
-    //private static final String ISBN_SEARCH_URL = "http://m.lib.ncku.edu.tw/catalogs/ISBNBibSearch.php?lan=%s&ISBN=%s";
     //20201123 Add titlechangerListener
     private ITitleChangeListener titleChangeListener; //標題變更的監聽介面(實體由MainActivity所控制)
     // TODO: Rename and change types of parameters
