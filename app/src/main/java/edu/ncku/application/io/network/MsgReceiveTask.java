@@ -36,8 +36,6 @@ public class MsgReceiveTask extends HttpsJsonReceiveTask implements Runnable, IO
     private static final String DEBUG_FLAG = MsgReceiveTask.class.getName();
     private static final Object LOCKER = new Object();
     private static final String SUB_FILE_NAME = ".messages";
-    //20200603 改成https的網址
-    //private static final String JSON_URL = "http://140.116.207.50/push/msg_json" +".php?msgNo=%s&os=A&recver=%s&did=%s";
     private static final String JSON_URL_SSL = "https://140.116.207.50/push/msg_json" +".php?msgNo=%s&os=A&recver=%s&did=%s";
 
     private String account;
@@ -47,8 +45,6 @@ public class MsgReceiveTask extends HttpsJsonReceiveTask implements Runnable, IO
     public MsgReceiveTask(Context mContext, String account, String msgNo, int publishTimestamp) {
         super(mContext);
         this.account = account.toUpperCase();
-        //20200603
-        //this.json_url = String.format(JSON_URL, msgNo, account, Preference.getDeviceID(mContext));
         this.json_url = String.format(JSON_URL_SSL, msgNo, account, Preference.getDeviceID(mContext));
 
         this.publishTimestamp = publishTimestamp;
@@ -59,8 +55,6 @@ public class MsgReceiveTask extends HttpsJsonReceiveTask implements Runnable, IO
         if(showLogMsg){ Log.d(DEBUG_FLAG, "running");
         }
         try {
-            //20200603 改成https protocol
-            //JSONObject json = new JSONObject(jsonRecieve(json_url)); // 透過父類別方法jsonRecieve取得JSON物件
             JSONObject json = new JSONObject(jsonReceive(json_url)); // 透過父類別方法jsonRecieve取得JSON物件
             String title = json.getString("Title"); // 從Json的物件當中取得標題
             String content = json.getString("Content"); // 從Json的物件當中取得內容
@@ -92,7 +86,6 @@ public class MsgReceiveTask extends HttpsJsonReceiveTask implements Runnable, IO
         PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0 /* Request code */,
                 intent, PendingIntent.FLAG_ONE_SHOT);
 
-//        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext)
                 .setContentTitle(mContext.getString(R.string.app_name))
                 .setContentText(message)

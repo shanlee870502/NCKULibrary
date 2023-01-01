@@ -16,8 +16,6 @@ import edu.ncku.application.util.Preference;
 public class SubscribeTask extends AsyncTask<Boolean, Void, Boolean> implements IOConstatnt{
 
     private static final String DEBUG_FLAG = SubscribeTask.class.getName();
-    //20200603 改成https的網址
-    //private static final String SUB_URL = "http://140.116.207.50/push/subscription.php";
     private static final String SUB_URL_SSL = "https://app.lib.ncku.edu.tw/push/subscription.php";
 
     private Context mContext;

@@ -19,12 +19,8 @@ import edu.ncku.application.util.Preference;
  */
 public class VisitorRecieveTask implements Runnable, IOConstatnt {
     private static final String DEBUG_FLAG = VisitorRecieveTask.class.getName();
-    //private static final String Main_LIB_VISITORS_URL = "http://140.116.207.50/push/functions/getVisitorNumber_main.php";
-    //private static final String K_VISITORS_URL = "http://140.116.207.50/push/functions/getVisitorNumber_k.php";
-    //private static final String K2_VISITORS_URL = "http://140.116.207.50/push/functions/getVisitorNumber_k2.php";
     private static final String Main_LIB_VISITORS_URL_SSL = "https://app.lib.ncku.edu.tw/push/functions/getVisitorNumber_main.php";
     private static final String K_VISITORS_URL_SSL = "https://app.lib.ncku.edu.tw/push/functions/getVisitorNumber_Knowledge.php";
-//    private static final String K2_VISITORS_URL_SSL = "https://app.lib.ncku.edu.tw/push/functions/getVisitorNumber_k2.php";
 
 
     private Context mContext;
@@ -50,21 +46,13 @@ public class VisitorRecieveTask implements Runnable, IOConstatnt {
                 String visitors_k = "";
                 String visitors_k2 = "";
                 try {
-                    /*20200521 改用https protocol*/
-                    /*visitors_main = HttpClient.sendPost(Main_LIB_VISITORS_URL, "").trim();
-                    visitors_k = HttpClient.sendPost(K_VISITORS_URL, "").trim();
-                    visitors_k2 = HttpClient.sendPost(K2_VISITORS_URL, "").trim();*/
                     visitors_main = HttpsClient.sendPost(Main_LIB_VISITORS_URL_SSL, "").trim();
                     visitors_k = HttpsClient.sendPost(K_VISITORS_URL_SSL, "").trim();
-                    // 20210903 合併k館兩層樓人數(改為統一為visitors_k)
-//                    visitors_k2 = HttpsClient.sendPost(K2_VISITORS_URL_SSL, "").trim();
 
                 }catch (Exception e){
                     e.printStackTrace();
                     visitors_main = "";
                     visitors_k = "";
-                    // 20210903 合併k館兩層樓人數(改為統一為visitors_k)
-//                    visitors_k2 = "";
                 }
 
                 /* 如果 main visitors 回傳結果包含非數字則清空 */
